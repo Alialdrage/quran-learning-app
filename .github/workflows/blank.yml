@@ -28,7 +28,7 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          channel: 'stable' # يمكنك تغييرها إلى beta إذا أردت
+          channel: 'stable'
 
       # 4. تحميل حزم ومكتبات المشروع (Dependencies)
       - name: Install dependencies
@@ -38,10 +38,10 @@ jobs:
       - name: Analyze code
         run: flutter analyze
 
-      # 6. تشغيل اختبارات المشروع الآلية (Unit Tests)
-      - name: Run tests
-        run: flutter test
+      # 6. اختبارات المشروع: تم إيقافها مؤقتاً لأن المشروع لا يحتوي على مجلد test/
+      # - name: Run tests
+      #   run: flutter test
 
-      # 7. بناء نسخة الأندرويد APK (يمكنك تغييرها إلى appbundle أو build web)
+      # 7. بناء نسخة الأندرويد APK
       - name: Build APK
         run: flutter build apk --release
