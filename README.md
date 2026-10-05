@@ -1,2 +1,29 @@
-# quran-learning-app
-تطبيق متكامل لتعليم قراءة القرآن الكريم - Quran Learning Application
+# تعليم قراءة القرآن الكريم
+
+تطبيق عربي مصمم لتعليم قراءة القرآن الكريم للمبتدئين والمتقدمين بطرق ممتعة وسهلة.
+
+## المميزات
+- واجهة عربية أنيقة ومريحة
+- دروس تعليمية تبدأ من المبتدئين
+- قراءة وأداء تمارين يومية
+- متابعة التقدم والتكرار
+- إعداد تلقائي لبناء APK على Android
+
+## التشغيل محلياً
+
+```bash
+flutter pub get
+flutter run
+```
+
+## بناء APK
+
+```bash
+flutter build apk --release
+```
+
+سيتم إنشاء الملف في:
+`build/app/outputs/flutter-apk/app-release.apk`
+
+## GitHub Actions
+تم تجهيز ملف workflow لبناء التطبيق تلقائياً وتحميله كـ artifact.
