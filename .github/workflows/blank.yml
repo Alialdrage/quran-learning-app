@@ -1,36 +1,47 @@
-# This is a basic workflow to help you get started with Actions
+# اسم بيئة العمل الخاصة بمشروع فلاتر
+name: Flutter CI
 
-name: CI
-
-# Controls when the workflow will run
+# محفزات التشغيل عند الدفع أو سحب الكود لفرع main
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+  workflow_dispatch: # للتشغيل اليدوي
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      # 1. نسخ كود المشروع داخل السيرفر الافتراضي
       - uses: actions/checkout@v4
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+      # 2. تثبيت جافا (مطلوبة لبناء تطبيقات أندرويد)
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+      # 3. تثبيت فلاتر وإعداد البيئة تلقائياً
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable' # يمكنك تغييرها إلى beta إذا أردت
+
+      # 4. تحميل حزم ومكتبات المشروع (Dependencies)
+      - name: Install dependencies
+        run: flutter pub get
+
+      # 5. فحص جودة الكود والتأكد من عدم وجود أخطاء صياغة (اختياري)
+      - name: Analyze code
+        run: flutter analyze
+
+      # 6. تشغيل اختبارات المشروع الآلية (Unit Tests)
+      - name: Run tests
+        run: flutter test
+
+      # 7. بناء نسخة الأندرويد APK (يمكنك تغييرها إلى appbundle أو build web)
+      - name: Build APK
+        run: flutter build apk --release
